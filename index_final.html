@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es" class="bg-slate-50 scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levantamiento de datos - Emprendedores Mitad del Mundo</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body
+    class="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-amber-100 selection:text-amber-900 pb-28 md:pb-8 bg-slate-50">
+
+    <!-- Splash Screen -->
+    <div id="splash-screen"
+        class="fixed inset-0 z-50 bg-slate-50 flex items-center justify-center transition-opacity duration-1000">
+        <div class="flex flex-col items-center">
+            <img src="logo-Photoroom.png" alt="CENESTUR"
+                class="h-56 w-auto object-contain animate-pulse drop-shadow-2xl mb-6">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 bg-amber-500 rounded-full animate-bounce" style="animation-delay: 0s"></div>
+                <div class="w-3 h-3 bg-amber-600 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 bg-amber-700 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 opacity-[0.03] pointer-events-none z-[-1]"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%230f172a\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
+    </div>
+
+    <!-- Header -->
+    <header
+        class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm shadow-slate-200/50 backdrop-blur-md bg-white/90">
+        <div
+            class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <img src="logo-Photoroom.png" alt="CENESTUR" class="h-12 sm:h-14 w-auto object-contain drop-shadow-md">
+                <div class="hidden sm:block h-10 w-px bg-slate-200"></div>
+                <div class="text-center sm:text-left">
+                    <h1 class="text-lg sm:text-xl font-black text-slate-800 tracking-tight leading-tight">Proyecto Mitad
+                        <br class="hidden sm:block"><span class="text-amber-600">del Mundo</span>
+                    </h1>
+                </div>
+            </div>
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex bg-slate-100 p-1 rounded-2xl shadow-inner border border-slate-200">
+                <button id="nav-form-btn" onclick="switchTab('tab-form')"
+                    class="tab-btn px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 bg-white text-amber-600 shadow-sm border border-amber-200 flex items-center gap-2"><i
+                        class="fa-solid fa-pen-to-square"></i> Nueva Ficha</button>
+                <button id="nav-records-btn" onclick="switchTab('tab-records')"
+                    class="tab-btn px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 text-slate-500 hover:text-slate-700 hover:bg-slate-50 border border-transparent flex items-center gap-2"><i
+                        class="fa-solid fa-database"></i> Registros</button>
+                <button id="nav-dashboard-btn" onclick="switchTab('tab-dashboard')"
+                    class="tab-btn px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 text-slate-500 hover:text-slate-700 hover:bg-slate-50 border border-transparent flex items-center gap-2"><i
+                        class="fa-solid fa-chart-pie"></i> Informe</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+        <!-- FORMULARIO TAB -->
+        <section id="tab-form" class="tab-content space-y-6">
+            <div
+                class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-amber-900/20 relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="text-2xl sm:text-3xl font-black mb-2 tracking-tight">Registro de Encuesta</h2>
+                    <p class="text-amber-100 font-medium text-sm sm:text-base max-w-lg">Complete los datos de la ficha.
+                        Por favor, asegúrese de llenar todos los campos obligatorios (*).</p>
+                </div>
+                <i
+                    class="fa-solid fa-clipboard-question absolute -right-4 -bottom-8 text-8xl opacity-20 transform -rotate-12"></i>
+            </div>
+
+            <form id="baseline-form" class="space-y-6 sm:space-y-8 pb-10"
+                onsubmit="event.preventDefault(); submitForm();">
+
+                <!-- ID/INFO LOCAL -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60 relative group">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-slate-800 rounded-l-3xl"></div>
+                    <div class="mb-6 flex items-center gap-3">
+                        <div class="bg-slate-100 p-3 rounded-xl text-slate-700"><i class="fa-solid fa-store fa-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 tracking-tight">Información del Local</h3>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Negocio <span
+                                    class="text-rose-500">*</span></label>
+                            <input type="text" id="nombre_negocio"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Propietario /
+                                Encuestado <span class="text-rose-500">*</span></label>
+                            <input type="text" id="propietario"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium"
+                                required>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Ubicación / Sector <span
+                                    class="text-rose-500">*</span></label>
+                            <input type="text" id="ubicacion"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Teléfono (Opcional)</label>
+                            <input type="tel" id="telefono"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 1: Datos Generales -->
+                <div
+                    class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden accordion-section">
+                    <button type="button" onclick="toggleSection('sec1')"
+                        class="w-full text-left px-6 py-5 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors border-b border-slate-200">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="bg-indigo-100 text-indigo-600 w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-inner">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800">1. Datos Generales y Perfil</h3>
+                        </div>
+                        <i id="icon-sec1"
+                            class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300 transform rotate-180"></i>
+                    </button>
+                    <div id="content-sec1" class="px-6 py-6 space-y-8 block">
+                        <!-- Q1 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">1. Sexo <span
+                                    class="text-rose-500">*</span></label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1"
+                                        value="Hombre" class="w-4 h-4 text-amber-600 focus:ring-amber-500" required>
+                                    <span class="text-sm font-medium">Hombre</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1"
+                                        value="Mujer" class="w-4 h-4 text-amber-600 focus:ring-amber-500"> <span
+                                        class="text-sm font-medium">Mujer</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1"
+                                        value="Prefiero no responder"
+                                        class="w-4 h-4 text-amber-600 focus:ring-amber-500"> <span
+                                        class="text-sm font-medium">Prefiero no responder</span></label>
+                            </div>
+                        </div>
+                        <!-- Q2 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">2. Edad <span
+                                    class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2"
+                                        value="18–30 años" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">18–30 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2"
+                                        value="31–45 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">31–45 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2"
+                                        value="46–60 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">46–60 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2"
+                                        value="Más de 60 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Más de 60 años</span></label>
+                            </div>
+                        </div>
+                        <!-- Q3 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">3. Nivel de instrucción <span
+                                    class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3"
+                                        value="Primaria" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Primaria</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3"
+                                        value="Secundaria" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Secundaria</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3"
+                                        value="Técnica/Tecnológica" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Técnica/Tecnológica</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3"
+                                        value="Superior" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Superior</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3"
+                                        value="Posgrado" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Posgrado</span></label>
+                            </div>
+                        </div>
+                        <!-- Q4 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">4. Años de experiencia operando
+                                este negocio <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4"
+                                        value="Menos de 1 año" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Menos de 1 año</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4"
+                                        value="1–3 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">1–3 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4"
+                                        value="4–7 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">4–7 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4"
+                                        value="8–15 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">8–15 años</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q4"
+                                        value="Más de 15 años" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Más de 15 años</span></label>
+                            </div>
+                        </div>
+                        <!-- Q5 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">5. Número de personas que
+                                trabajan en el negocio (incluido usted) <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q5"
+                                        value="1" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">1</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q5"
+                                        value="2–3" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">2–3</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q5"
+                                        value="4–5" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">4–5</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q5"
+                                        value="Más de 5" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Más de 5</span></label>
+                            </div>
+                        </div>
+                        <!-- Q6 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">6. ¿El negocio es su única fuente
+                                de ingresos? <span class="text-rose-500">*</span></label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q6"
+                                        value="Sí" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Sí</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q6"
+                                        value="No" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">No</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Marketing -->
+                <div
+                    class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden accordion-section">
+                    <button type="button" onclick="toggleSection('sec2')"
+                        class="w-full text-left px-6 py-5 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors border-b border-slate-200">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="bg-sky-100 text-sky-600 w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-inner">
+                                <i class="fa-solid fa-share-nodes"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800">2. Marketing y Redes Sociales</h3>
+                        </div>
+                        <i id="icon-sec2"
+                            class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="content-sec2" class="px-6 py-6 space-y-8 hidden">
+                        <!-- Q7 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">7. ¿Utiliza redes sociales o
+                                canales digitales para promocionar su negocio? <span
+                                    class="text-rose-500">*</span></label>
+                            <div class="flex gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q7"
+                                        value="Sí" onchange="toggleRedes(true)" class="w-4 h-4 text-amber-600" required>
+                                    <span class="text-sm font-medium">Sí</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q7"
+                                        value="No" onchange="toggleRedes(false)" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">No (pase a la pregunta 17)</span></label>
+                            </div>
+                        </div>
+
+                        <div id="redes-section"
+                            class="hidden space-y-8 bg-sky-50/50 p-5 rounded-2xl border border-sky-100">
+                            <!-- Q8 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">8. ¿Qué redes sociales o
+                                    canales digitales utiliza? (Puede marcar más de una opción)</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="Facebook" class="w-4 h-4 text-amber-600 rounded"> <span
+                                            class="text-sm font-medium">Facebook</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="Instagram" class="w-4 h-4 text-amber-600 rounded"> <span
+                                            class="text-sm font-medium">Instagram</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="TikTok" class="w-4 h-4 text-amber-600 rounded"> <span
+                                            class="text-sm font-medium">TikTok</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="WhatsApp Business" class="w-4 h-4 text-amber-600 rounded">
+                                        <span class="text-sm font-medium">WhatsApp Business</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="Página web propia" class="w-4 h-4 text-amber-600 rounded">
+                                        <span class="text-sm font-medium">Página web propia</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
+                                            name="q8" value="YouTube" class="w-4 h-4 text-amber-600 rounded"> <span
+                                            class="text-sm font-medium">YouTube</span></label>
+                                    <div class="flex items-center gap-2 w-full col-span-2 sm:col-span-3 mt-2 sm:mt-0">
+                                        <input type="checkbox" name="q8" value="Otro"
+                                            class="w-4 h-4 text-amber-600 rounded">
+                                        <input type="text" id="q8_otro"
+                                            class="px-3 py-1 text-sm border-b-2 border-slate-300 focus:border-amber-500 outline-none w-48"
+                                            placeholder="Otro...">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Q9 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">9. ¿Desde hace cuánto tiempo
+                                    utiliza redes sociales para su negocio?</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q9"
+                                            value="Menos de 6 meses" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Menos de 6 meses</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q9"
+                                            value="6 meses a 1 año" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">6 meses a 1 año</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q9"
+                                            value="1 a 3 años" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">1 a 3 años</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q9"
+                                            value="Más de 3 años" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Más de 3 años</span></label>
+                                </div>
+                            </div>
+                            <!-- Q10 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">10. ¿Con qué frecuencia
+                                    publica contenido?</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q10"
+                                            value="Varias veces por semana" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Varias veces por semana</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q10"
+                                            value="Una vez por semana" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Una vez por semana</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q10"
+                                            value="Una o dos veces al mes" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Una o dos veces al mes</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q10"
+                                            value="Rara vez" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Rara vez</span></label>
+                                </div>
+                            </div>
+                            <!-- Q11 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">11. Objetivo
+                                    principal:</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q11"
+                                            value="Dar a conocer el negocio" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Dar a conocer el negocio</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q11"
+                                            value="Generar ventas" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Generar ventas</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q11"
+                                            value="Publicidad de promociones" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Publicidad de promociones</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q11"
+                                            value="Atención al cliente" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Atención al cliente</span></label>
+                                    <div class="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+                                        <input type="radio" name="q11" value="Otro" class="w-4 h-4 text-amber-600">
+                                        <input type="text" id="q11_otro"
+                                            class="px-3 py-1 text-sm border-b-2 border-slate-300 focus:border-amber-500 outline-none w-48"
+                                            placeholder="Otro...">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Q12 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">12. Nivel de interacción con
+                                    clientes (1: Bajo, 5: Alto)</label>
+                                <div class="flex gap-4">
+                                    <label class="flex flex-col items-center gap-1 cursor-pointer"><span
+                                            class="text-xs font-bold text-slate-500">1</span><input type="radio"
+                                            name="q12" value="1" class="w-5 h-5 text-amber-600"></label>
+                                    <label class="flex flex-col items-center gap-1 cursor-pointer"><span
+                                            class="text-xs font-bold text-slate-500">2</span><input type="radio"
+                                            name="q12" value="2" class="w-5 h-5 text-amber-600"></label>
+                                    <label class="flex flex-col items-center gap-1 cursor-pointer"><span
+                                            class="text-xs font-bold text-slate-500">3</span><input type="radio"
+                                            name="q12" value="3" class="w-5 h-5 text-amber-600"></label>
+                                    <label class="flex flex-col items-center gap-1 cursor-pointer"><span
+                                            class="text-xs font-bold text-slate-500">4</span><input type="radio"
+                                            name="q12" value="4" class="w-5 h-5 text-amber-600"></label>
+                                    <label class="flex flex-col items-center gap-1 cursor-pointer"><span
+                                            class="text-xs font-bold text-slate-500">5</span><input type="radio"
+                                            name="q12" value="5" class="w-5 h-5 text-amber-600"></label>
+                                </div>
+                            </div>
+                            <!-- Q13 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">13. ¿Ha invertido en
+                                    publicidad paga?</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q13"
+                                            value="Sí, regularmente" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Sí, regularmente</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q13"
+                                            value="Sí, ocasionalmente" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Sí, ocasionalmente</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q13"
+                                            value="No" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No</span></label>
+                                </div>
+                            </div>
+                            <!-- Q14 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">14. Resultados
+                                    obtenidos:</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
+                                            value="Más clientes" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Más clientes</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
+                                            value="Incremento en ventas" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Incremento en ventas</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
+                                            value="Mayor reconocimiento" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Mayor reconocimiento</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
+                                            value="No he notado resultados" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No he notado resultados</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
+                                            value="No llevo seguimiento" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No llevo seguimiento</span></label>
+                                </div>
+                            </div>
+                            <!-- Q15 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">15. ¿Utiliza herramientas
+                                    para medir el desempeño?</label>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q15"
+                                            value="Sí" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Sí</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q15"
+                                            value="No" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q15"
+                                            value="No conozco" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No conozco</span></label>
+                                </div>
+                            </div>
+                            <!-- Q16 -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-3">16. ¿Tiene un calendario de
+                                    contenidos?</label>
+                                <div class="flex gap-4">
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q16"
+                                            value="Sí" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">Sí</span></label>
+                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q16"
+                                            value="No" class="w-4 h-4 text-amber-600"> <span
+                                            class="text-sm font-medium">No</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: Finanzas y Operaciones -->
+                <div
+                    class="bg-white rounded-3xl shadow-sm border border-slate-200/60 overflow-hidden accordion-section">
+                    <button type="button" onclick="toggleSection('sec3')"
+                        class="w-full text-left px-6 py-5 flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors border-b border-slate-200">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="bg-emerald-100 text-emerald-600 w-10 h-10 rounded-full flex items-center justify-center font-bold shadow-inner">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-800">3. Operaciones y Finanzas</h3>
+                        </div>
+                        <i id="icon-sec3"
+                            class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="content-sec3" class="px-6 py-6 space-y-8 hidden">
+                        <!-- Q17 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">17. Método de pago más utilizado:
+                                <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q17"
+                                        value="Efectivo" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Efectivo</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q17"
+                                        value="Transferencia bancaria" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Transferencia bancaria</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q17"
+                                        value="Tarjeta de débito" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Tarjeta de débito</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q17"
+                                        value="Tarjeta de crédito" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Tarjeta de crédito</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q17"
+                                        value="Billetera electrónica" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Billetera electrónica</span></label>
+                            </div>
+                        </div>
+                        <!-- Q18 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">18. ¿Cuál práctica aplica en su
+                                negocio? <span class="text-rose-500">*</span></label>
+                            <div class="flex flex-col gap-3">
+                                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q18"
+                                        value="Fijo precios según costos y acepto solo efectivo."
+                                        class="w-4 h-4 text-amber-600 shrink-0" required> <span
+                                        class="text-sm font-medium">Fijo precios según costos y acepto solo
+                                        efectivo.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q18"
+                                        value="Fijo precios según la competencia y acepto varios métodos de pago."
+                                        class="w-4 h-4 text-amber-600 shrink-0"> <span class="text-sm font-medium">Fijo
+                                        precios según la competencia y acepto varios métodos de pago.</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="q18"
+                                        value="Fijo precios por experiencia y acepto varios métodos de pago."
+                                        class="w-4 h-4 text-amber-600 shrink-0"> <span class="text-sm font-medium">Fijo
+                                        precios por experiencia y acepto varios métodos de pago.</span></label>
+                            </div>
+                        </div>
+                        <!-- Q19 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">19. ¿Cómo fija el precio? <span
+                                    class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q19"
+                                        value="Según el costo" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Según el costo</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q19"
+                                        value="Comparando con otros vendedores" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Comparando con otros vendedores</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q19"
+                                        value="Según la temporada" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Según la temporada</span></label>
+                                <div class="flex items-center gap-2 w-full mt-2 sm:mt-0">
+                                    <input type="radio" name="q19" value="Otro" class="w-4 h-4 text-amber-600">
+                                    <input type="text" id="q19_otro"
+                                        class="px-3 py-1 text-sm border-b-2 border-slate-300 focus:border-amber-500 outline-none w-full"
+                                        placeholder="Otro...">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Q20 -->
+                        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                            <label class="block text-sm font-bold text-slate-700 mb-3">20. Ganancias mensuales
+                                proyectadas: <span class="text-rose-500">*</span></label>
+                            <div class="flex flex-wrap gap-4 mb-4">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q20"
+                                        value="Altas" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Altas</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q20"
+                                        value="Medias" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Medias</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q20"
+                                        value="Bajas" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Bajas</span></label>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Porque:</label>
+                                <textarea id="q20_porque" rows="2"
+                                    class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium resize-none"
+                                    placeholder="Explique brevemente..." required></textarea>
+                            </div>
+                        </div>
+                        <!-- Q21 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">21. Ventas diarias aproximadas:
+                                <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q21"
+                                        value="Menos de $50" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Menos de $50</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q21"
+                                        value="Entre $50 y $100" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Entre $50 y $100</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q21"
+                                        value="Entre $101 y $200" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Entre $101 y $200</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q21"
+                                        value="Más de $200" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Más de $200</span></label>
+                            </div>
+                        </div>
+                        <!-- Q22 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">22. ¿Qué porcentaje de sus
+                                ganancias reinvierte? <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q22"
+                                        value="Menos del 25%" class="w-4 h-4 text-amber-600" required> <span
+                                        class="text-sm font-medium">Menos del 25%</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q22"
+                                        value="Entre 25% y 50%" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Entre 25% y 50%</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q22"
+                                        value="Entre 51% y 75%" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Entre 51% y 75%</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q22"
+                                        value="Más del 75%" class="w-4 h-4 text-amber-600"> <span
+                                        class="text-sm font-medium">Más del 75%</span></label>
+                            </div>
+                        </div>
+                        <!-- Q23 -->
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-3">23. ¿Cuál es el gasto que más
+                                consume los ingresos? <span class="text-rose-500">*</span></label>
+                            <div class="grid grid-cols-1 gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q23"
+                                        value="Compra de mercadería o insumos" class="w-4 h-4 text-amber-600 rounded">
+                                    <span class="text-sm font-medium">Compra de mercadería o insumos</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q23"
+                                        value="Pago de alquiler y servicios" class="w-4 h-4 text-amber-600 rounded">
+                                    <span class="text-sm font-medium">Pago de alquiler y servicios</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q23"
+                                        value="Pago a empleados" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Pago a empleados</span></label>
+                                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" name="q23"
+                                        value="Pago de deudas o préstamos" class="w-4 h-4 text-amber-600 rounded"> <span
+                                        class="text-sm font-medium">Pago de deudas o préstamos</span></label>
+                                <div class="flex items-center gap-2 w-full mt-2 sm:mt-0">
+                                    <input type="checkbox" name="q23" value="Otro"
+                                        class="w-4 h-4 text-amber-600 rounded">
+                                    <input type="text" id="q23_otro"
+                                        class="px-3 py-1 text-sm border-b-2 border-slate-300 focus:border-amber-500 outline-none w-full"
+                                        placeholder="Otro...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submit-btn"
+                    class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl shadow-lg shadow-slate-900/20 transition-all transform hover:-translate-y-1 active:translate-y-0 text-lg flex justify-center items-center gap-3">
+                    <i class="fa-solid fa-paper-plane"></i> Guardar y Registrar Encuesta
+                </button>
+            </form>
+        </section>
+
+        <!-- RECORDS TAB -->
+        <section id="tab-records" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight mb-1">Registros de
+                            Levantamiento</h2>
+                        <p class="text-sm sm:text-base text-slate-500">Emprendimientos encuestados en Mitad del Mundo.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                        <div class="flex gap-2">
+                            <input type="text" id="search-records" oninput="filterRecords()"
+                                placeholder="Buscar negocio..."
+                                class="flex-1 min-w-0 px-4 py-2 border border-slate-300 rounded-2xl text-sm outline-none focus:ring-2 focus:ring-amber-500 bg-slate-50 focus:bg-white transition-colors">
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="exportToCSV()"
+                                class="flex-1 sm:flex-none px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-sm font-bold transition flex justify-center items-center gap-2 shadow-sm"
+                                title="Exportar">
+                                <i class="fa-solid fa-file-csv"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                    <table class="w-full text-left border-collapse whitespace-nowrap">
+                        <thead>
+                            <tr
+                                class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider font-bold border-b border-slate-200">
+                                <th class="p-4">#</th>
+                                <th class="p-4">Fecha</th>
+                                <th class="p-4">Negocio</th>
+                                <th class="p-4">Propietario</th>
+                                <th class="p-4">Ubicación</th>
+                                <th class="p-4 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-table-body" class="divide-y divide-slate-100 text-sm">
+                            <!-- JS inyecta filas aquí -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Paginación Simple -->
+                <div class="mt-6 flex justify-between items-center text-sm text-slate-500">
+                    <span id="records-info">Mostrando 0 de 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD TAB -->
+        <section id="tab-dashboard" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60">
+                <div class="mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight mb-1">Informe General</h2>
+                    <p class="text-sm sm:text-base text-slate-500">Métricas clave del levantamiento.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                        <div class="text-slate-500 text-sm font-bold uppercase tracking-wider mb-1">Total Fichas</div>
+                        <div class="text-3xl font-black text-slate-800" id="stat-total">0</div>
+                    </div>
+                    <div class="bg-amber-50 rounded-2xl p-5 border border-amber-100">
+                        <div class="text-amber-700 text-sm font-bold uppercase tracking-wider mb-1">Hombres</div>
+                        <div class="text-3xl font-black text-amber-600" id="stat-hombres">0</div>
+                    </div>
+                    <div class="bg-rose-50 rounded-2xl p-5 border border-rose-100">
+                        <div class="text-rose-700 text-sm font-bold uppercase tracking-wider mb-1">Mujeres</div>
+                        <div class="text-3xl font-black text-rose-600" id="stat-mujeres">0</div>
+                    </div>
+                    <div class="bg-sky-50 rounded-2xl p-5 border border-sky-100">
+                        <div class="text-sky-700 text-sm font-bold uppercase tracking-wider mb-1">Usan Redes</div>
+                        <div class="text-3xl font-black text-sky-600" id="stat-redes">0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <nav
+        class="md:hidden fixed bottom-0 w-full bg-white border-t border-slate-200 flex justify-around p-3 pb-8 z-40 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <button id="nav-form-btn-mobile" onclick="switchTab('tab-form')"
+            class="tab-btn flex flex-col items-center gap-1 text-amber-600 transition-colors w-1/3">
+            <i class="fa-solid fa-pen-to-square text-xl"></i><span class="text-[10px] font-bold">Ficha</span>
+        </button>
+        <button id="nav-records-btn-mobile" onclick="switchTab('tab-records')"
+            class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors w-1/3">
+            <i class="fa-solid fa-database text-xl"></i><span class="text-[10px] font-bold">Registros</span>
+        </button>
+        <button id="nav-dashboard-btn-mobile" onclick="switchTab('tab-dashboard')"
+            class="tab-btn flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors w-1/3">
+            <i class="fa-solid fa-chart-pie text-xl"></i><span class="text-[10px] font-bold">Informe</span>
+        </button>
+    </nav>
+
+    <!-- Modal Detalles -->
+    <div id="record-modal"
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div
+            class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col transform scale-95 transition-transform duration-300">
+            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="text-lg font-black text-slate-800" id="modal-title">Detalles de Ficha</h3>
+                <button onclick="closeModal()"
+                    class="text-slate-400 hover:text-rose-500 transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-rose-50"><i
+                        class="fa-solid fa-xmark fa-lg"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-grow" id="modal-body">
+                <!-- Se inyecta info -->
+            </div>
+            <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button onclick="closeModal()"
+                    class="px-6 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-sm font-bold transition">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notification"
+        class="fixed bottom-24 md:bottom-4 right-4 flex items-center bg-white border text-slate-700 px-4 py-3 rounded-xl shadow-xl transition-all transform duration-300 translate-y-10 opacity-0 z-50 pointer-events-none">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="notif-text" class="font-medium text-sm">Guardado correctamente</span>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDD6C1qMqy8ljTRPvgssRcVDyRSXElf8tu4XdDycuUBq_biOq-jIW4bW0f-yEln1WeyA/exec';
+        let records = [];
+
+        window.onload = async function () {
+            // Splash screen removal
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.remove(), 1000);
+                }
+            }, 800);
+
+            const stored = localStorage.getItem('cenestur_fichas_v2');
+            if (stored) {
+                records = JSON.parse(stored);
+            }
+
+            try {
+                if (SCRIPT_URL !== 'TU_URL_DE_APPS_SCRIPT_AQUI') {
+                    const response = await fetch(SCRIPT_URL);
+                    const rawData = await response.json();
+                    if (rawData && rawData.length > 0) {
+                        records = rawData.map(r => ({
+                            id: r.ID || r.id,
+                            fecha: r.Fecha_Registro || r.fecha,
+                            nombreNegocio: r.Nombre_Negocio || r.nombreNegocio,
+                            propietario: r.Propietario || r.propietario,
+                            ubicacion: r.Ubicacion || r.ubicacion,
+                            telefono: r.Telefono || r.telefono,
+                            q1: r.P1_Sexo || r.q1,
+                            q2: r.P2_Edad || r.q2,
+                            q3: r.P3_Nivel_Instruccion || r.q3,
+                            q4: r.P4_Anos_Experiencia || r.q4,
+                            q5: r.P5_Num_Personas || r.q5,
+                            q6: r.P6_Unica_Fuente_Ingreso || r.q6,
+                            q7: r.P7_Usa_Redes_Sociales || r.q7,
+                            q8: r.P8_Que_Redes_Usa || r.q8,
+                            q9: r.P9_Tiempo_Redes || r.q9,
+                            q10: r.P10_Frecuencia_Publicacion || r.q10,
+                            q11: r.P11_Objetivo_Principal || r.q11,
+                            q12: r.P12_Nivel_Interaccion || r.q12,
+                            q13: r.P13_Invertido_Publicidad || r.q13,
+                            q14: r.P14_Resultados_Obtenidos || r.q14,
+                            q15: r.P15_Usa_Herramientas_Medir || r.q15,
+                            q16: r.P16_Calendario_Contenidos || r.q16,
+                            q17: r.P17_Metodo_Pago || r.q17,
+                            q18: r.P18_Practica_Negocio || r.q18,
+                            q19: r.P19_Como_Fija_Precio || r.q19,
+                            q20: r.P20_Ganancias_Mensuales || r.q20,
+                            q21: r.P21_Ventas_Diarias || r.q21,
+                            q22: r.P22_Porcentaje_Reinvierte || r.q22,
+                            q23: r.P23_Gasto_Consume_Ingresos || r.q23
+                        }));
+                        saveRecords();
+                    }
+                }
+            } catch (err) {
+                console.warn('Error loading from Sheets, using localStorage', err);
+            }
+
+            updateCounter();
+            renderRecordsTable();
+            updateDashboardMetrics();
+        };
+
+        function toggleSection(sectionId) {
+            const allContents = ['content-sec1', 'content-sec2', 'content-sec3'];
+            const allIcons = ['icon-sec1', 'icon-sec2', 'icon-sec3'];
+
+            allContents.forEach((id, index) => {
+                const content = document.getElementById(id);
+                const icon = document.getElementById(allIcons[index]);
+                if (id === 'content-' + sectionId) {
+                    if (content.classList.contains('hidden')) {
+                        content.classList.remove('hidden');
+                        content.classList.add('block');
+                        icon.classList.add('rotate-180');
+                    } else {
+                        content.classList.add('hidden');
+                        content.classList.remove('block');
+                        icon.classList.remove('rotate-180');
+                    }
+                } else {
+                    content.classList.add('hidden');
+                    content.classList.remove('block');
+                    icon.classList.remove('rotate-180');
+                }
+            });
+        }
+
+        function saveRecords() {
+            localStorage.setItem('cenestur_fichas_v2', JSON.stringify(records));
+            updateCounter();
+            renderRecordsTable();
+            updateDashboardMetrics();
+        }
+
+        function updateCounter() {
+            // Nothing to do since we don't show the red dot anymore, but kept for compatibility
+        }
+
+        function toggleRedes(show) {
+            const section = document.getElementById('redes-section');
+            const inputs = section.querySelectorAll('input');
+            if (show) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+                inputs.forEach(input => {
+                    if (input.type === 'checkbox' || input.type === 'radio') input.checked = false;
+                    if (input.type === 'text') input.value = '';
+                });
+            }
+        }
+
+        function getRadioValue(name) {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            if (!el) return '';
+            if (el.value === 'Otro') {
+                const otroInput = document.getElementById(`${name}_otro`);
+                return otroInput && otroInput.value.trim() !== '' ? `Otro: ${otroInput.value}` : 'Otro';
+            }
+            return el.value;
+        }
+
+        function getCheckboxValues(name) {
+            const checked = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`));
+            let values = checked.map(el => el.value);
+            if (values.includes('Otro') || values.includes('Otros')) {
+                const otroInput = document.getElementById(`${name}_otro`);
+                if (otroInput && otroInput.value.trim() !== '') {
+                    values = values.map(v => (v === 'Otro' || v === 'Otros') ? `${v}: ${otroInput.value}` : v);
+                }
+            }
+            return values.join(', ');
+        }
+
+        async function submitForm() {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+
+            const newRecord = {
+                id: 'REC-' + Date.now(),
+                fecha: new Date().toISOString(),
+                nombreNegocio: document.getElementById('nombre_negocio').value.trim(),
+                propietario: document.getElementById('propietario').value.trim(),
+                ubicacion: document.getElementById('ubicacion').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                q1: getRadioValue('q1'),
+                q2: getRadioValue('q2'),
+                q3: getRadioValue('q3'),
+                q4: getRadioValue('q4'),
+                q5: getRadioValue('q5'),
+                q6: getRadioValue('q6'),
+                q7: getRadioValue('q7'),
+                q8: getCheckboxValues('q8'),
+                q9: getRadioValue('q9'),
+                q10: getRadioValue('q10'),
+                q11: getRadioValue('q11'),
+                q12: getRadioValue('q12'),
+                q13: getRadioValue('q13'),
+                q14: getRadioValue('q14'),
+                q15: getRadioValue('q15'),
+                q16: getRadioValue('q16'),
+                q17: getCheckboxValues('q17'),
+                q18: getRadioValue('q18'),
+                q19: getRadioValue('q19'),
+                q20: getRadioValue('q20'),
+                q21: getRadioValue('q21'),
+                q22: getRadioValue('q22'),
+                q23: getCheckboxValues('q23')
+            };
+
+            const porque = document.getElementById('q20_porque');
+            if (porque && porque.value.trim() !== '') {
+                newRecord.q20 += ` (Porqué: ${porque.value})`;
+            }
+
+            records.unshift(newRecord);
+            saveRecords();
+
+            try {
+                if (SCRIPT_URL !== 'TU_URL_DE_APPS_SCRIPT_AQUI') {
+                    const googleRecord = {
+                        ID: newRecord.id,
+                        Fecha_Registro: newRecord.fecha,
+                        Nombre_Negocio: newRecord.nombreNegocio,
+                        Propietario: newRecord.propietario,
+                        Ubicacion: newRecord.ubicacion,
+                        Telefono: newRecord.telefono,
+                        P1_Sexo: newRecord.q1,
+                        P2_Edad: newRecord.q2,
+                        P3_Nivel_Instruccion: newRecord.q3,
+                        P4_Anos_Experiencia: newRecord.q4,
+                        P5_Num_Personas: newRecord.q5,
+                        P6_Unica_Fuente_Ingreso: newRecord.q6,
+                        P7_Usa_Redes_Sociales: newRecord.q7,
+                        P8_Que_Redes_Usa: newRecord.q8,
+                        P9_Tiempo_Redes: newRecord.q9,
+                        P10_Frecuencia_Publicacion: newRecord.q10,
+                        P11_Objetivo_Principal: newRecord.q11,
+                        P12_Nivel_Interaccion: newRecord.q12,
+                        P13_Invertido_Publicidad: newRecord.q13,
+                        P14_Resultados_Obtenidos: newRecord.q14,
+                        P15_Usa_Herramientas_Medir: newRecord.q15,
+                        P16_Calendario_Contenidos: newRecord.q16,
+                        P17_Metodo_Pago: newRecord.q17,
+                        P18_Practica_Negocio: newRecord.q18,
+                        P19_Como_Fija_Precio: newRecord.q19,
+                        P20_Ganancias_Mensuales: newRecord.q20,
+                        P21_Ventas_Diarias: newRecord.q21,
+                        P22_Porcentaje_Reinvierte: newRecord.q22,
+                        P23_Gasto_Consume_Ingresos: newRecord.q23
+                    };
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8'
+                        },
+                        body: JSON.stringify(googleRecord)
+                    });
+                }
+                showNotification('Ficha registrada y sincronizada', 'success');
+            } catch (err) {
+                console.error(err);
+                showNotification('Guardado localmente. Sin conexión a Sheets.', 'error');
+            }
+
+            document.getElementById('baseline-form').reset();
+            toggleRedes(false);
+
+            // Re-abrir la seccion 1 por defecto al resetear
+            toggleSection('sec1');
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Guardar y Registrar Encuesta';
+            window.scrollTo(0, 0);
+            switchTab('tab-records');
+        }
+
+        function renderRecordsTable(filter = '') {
+            const tbody = document.getElementById('records-table-body');
+            const info = document.getElementById('records-info');
+            tbody.innerHTML = '';
+
+            let filtered = records;
+            if (filter.trim() !== '') {
+                const q = filter.toLowerCase();
+                filtered = records.filter(r =>
+                    r.nombreNegocio.toLowerCase().includes(q) ||
+                    r.propietario.toLowerCase().includes(q)
+                );
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-500">No hay registros almacenados.</td></tr>`;
+            } else {
+                filtered.forEach((record, index) => {
+                    const date = new Date(record.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50/80 transition-colors group cursor-pointer border-b border-slate-100 last:border-0";
+                    tr.onclick = () => viewRecord(record.id);
+                    tr.innerHTML = `
+                        <td class="p-4 text-slate-400 text-xs font-bold">${records.length - index}</td>
+                        <td class="p-4"><span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-bold">${date}</span></td>
+                        <td class="p-4 font-bold text-slate-800">${record.nombreNegocio}</td>
+                        <td class="p-4 text-slate-600">${record.propietario}</td>
+                        <td class="p-4 text-slate-500 text-xs">${record.ubicacion}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="event.stopPropagation(); viewRecord('${record.id}')" class="text-amber-500 hover:text-amber-600 w-8 h-8 rounded-full hover:bg-amber-50 transition-colors"><i class="fa-solid fa-eye"></i></button>
+                            <button onclick="event.stopPropagation(); deleteRecord('${record.id}')" class="text-slate-300 hover:text-rose-500 w-8 h-8 rounded-full hover:bg-rose-50 transition-colors ml-1"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            info.textContent = `Mostrando ${filtered.length} de ${records.length}`;
+        }
+
+        function filterRecords() {
+            const query = document.getElementById('search-records').value;
+            renderRecordsTable(query);
+        }
+
+        function deleteRecord(id) {
+            if (confirm('¿Eliminar este registro localmente? (No se borrará de Google Sheets)')) {
+                records = records.filter(r => r.id !== id);
+                saveRecords();
+                showNotification('Registro eliminado');
+            }
+        }
+
+        function viewRecord(id) {
+            const record = records.find(r => r.id === id);
+            if (!record) return;
+
+            document.getElementById('modal-title').textContent = record.nombreNegocio;
+
+            let detailsHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">`;
+
+            const renderQA = (q, a) => {
+                if (!a) return '';
+                return `
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">${q}</div>
+                    <div class="text-sm font-medium text-slate-800">${a}</div>
+                </div>`;
+            };
+
+            detailsHTML += renderQA('Propietario', record.propietario);
+            detailsHTML += renderQA('Ubicación', record.ubicacion);
+            detailsHTML += renderQA('Teléfono', record.telefono);
+
+            detailsHTML += renderQA('1. Sexo', record.q1);
+            detailsHTML += renderQA('2. Edad', record.q2);
+            detailsHTML += renderQA('3. Nivel Instrucción', record.q3);
+            detailsHTML += renderQA('4. Experiencia Negocio', record.q4);
+            detailsHTML += renderQA('5. Num. Personas Trabajando', record.q5);
+            detailsHTML += renderQA('6. Única Fuente Ingreso', record.q6);
+            detailsHTML += renderQA('7. Usa Redes Sociales', record.q7);
+
+            if (record.q7 === 'Sí') {
+                detailsHTML += renderQA('8. Redes que usa', record.q8);
+                detailsHTML += renderQA('9. Tiempo usando redes', record.q9);
+                detailsHTML += renderQA('10. Frecuencia publicación', record.q10);
+                detailsHTML += renderQA('11. Objetivo', record.q11);
+            }
+
+            detailsHTML += renderQA('12. Nivel Interacción', record.q12);
+            detailsHTML += renderQA('13. Publicidad Paga', record.q13);
+            detailsHTML += renderQA('14. Resultados', record.q14);
+            detailsHTML += renderQA('15. Herramientas de Medición', record.q15);
+            detailsHTML += renderQA('16. Calendario Contenidos', record.q16);
+            detailsHTML += renderQA('17. Método Pago', record.q17);
+            detailsHTML += renderQA('18. Práctica Negocio', record.q18);
+            detailsHTML += renderQA('19. Fijación Precios', record.q19);
+            detailsHTML += renderQA('20. Ganancias Proyectadas', record.q20);
+            detailsHTML += renderQA('21. Ventas Diarias', record.q21);
+            detailsHTML += renderQA('22. Porcentaje Reinvierte', record.q22);
+            detailsHTML += renderQA('23. Mayor Gasto', record.q23);
+
+            detailsHTML += `</div>`;
+            document.getElementById('modal-body').innerHTML = detailsHTML;
+
+            const modal = document.getElementById('record-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('record-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function updateDashboardMetrics() {
+            document.getElementById('stat-total').textContent = records.length;
+            const hombres = records.filter(r => r.q1 === 'Hombre').length;
+            const mujeres = records.filter(r => r.q1 === 'Mujer').length;
+            document.getElementById('stat-hombres').textContent = hombres;
+            document.getElementById('stat-mujeres').textContent = mujeres;
+            const usaRedes = records.filter(r => r.q7 === 'Sí').length;
+            document.getElementById('stat-redes').textContent = usaRedes;
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.id === tabId.replace('tab-', 'nav-') + '-btn' || btn.id === tabId.replace('tab-', 'nav-') + '-btn-mobile') {
+                    if (btn.id.includes('mobile')) {
+                        btn.classList.add('text-amber-600');
+                        btn.classList.remove('text-slate-400');
+                    } else {
+                        btn.classList.add('bg-white', 'text-amber-600', 'shadow-sm', 'border-amber-200');
+                        btn.classList.remove('text-slate-500', 'border-transparent');
+                    }
+                } else {
+                    if (btn.id.includes('mobile')) {
+                        btn.classList.remove('text-amber-600');
+                        btn.classList.add('text-slate-400');
+                    } else {
+                        btn.classList.remove('bg-white', 'text-amber-600', 'shadow-sm', 'border-amber-200');
+                        btn.classList.add('text-slate-500', 'border-transparent');
+                    }
+                }
+            });
+        }
+
+        function exportToCSV() {
+            if (records.length === 0) {
+                showNotification('No hay datos para exportar', 'error');
+                return;
+            }
+            // Simple CSV export
+            const headers = ['ID', 'Fecha', 'Negocio', 'Propietario', 'Ubicacion', 'Q1_Sexo', 'Q2_Edad', 'Q7_Redes'];
+            let csv = headers.join(',') + '\n';
+            records.forEach(r => {
+                csv += [r.id, r.fecha, `"${r.nombreNegocio}"`, `"${r.propietario}"`, `"${r.ubicacion}"`, r.q1, r.q2, r.q7].join(',') + '\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", "CENESTUR_Export.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notif = document.getElementById('notification');
+            if (!notif) return;
+            const icon = notif.querySelector('svg');
+            const text = document.getElementById('notif-text');
+            text.textContent = message;
+
+            if (type === 'success') {
+                notif.className = 'fixed bottom-24 md:bottom-4 right-4 flex items-center bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3 rounded-xl shadow-lg transition-all transform duration-300 translate-y-0 opacity-100 z-50';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+            } else {
+                notif.className = 'fixed bottom-24 md:bottom-4 right-4 flex items-center bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-xl shadow-lg transition-all transform duration-300 translate-y-0 opacity-100 z-50';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>';
+            }
+
+            setTimeout(() => {
+                notif.classList.remove('translate-y-0', 'opacity-100');
+                notif.classList.add('translate-y-10', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
