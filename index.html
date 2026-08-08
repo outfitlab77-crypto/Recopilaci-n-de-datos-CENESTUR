@@ -879,7 +879,18 @@
             });
         }
 
+        function reassignIDs() {
+            let counter = 1;
+            // Los registros están ordenados del más nuevo (índice 0) al más viejo.
+            // Para que el más viejo sea el primero, recorremos de atrás hacia adelante.
+            for (let i = records.length - 1; i >= 0; i--) {
+                records[i].id = 'REC-' + String(counter).padStart(5, '0');
+                counter++;
+            }
+        }
+
         function saveRecords() {
+            reassignIDs();
             localStorage.setItem('cenestur_fichas_v2', JSON.stringify(records));
             updateCounter();
             renderRecordsTable();
