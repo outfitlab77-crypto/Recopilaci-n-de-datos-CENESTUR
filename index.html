@@ -923,7 +923,7 @@
                     values = values.map(v => (v === 'Otro' || v === 'Otros') ? `${v}: ${otroInput.value}` : v);
                 }
             }
-            return values.join(', ');
+            return values.join(' - ');
         }
 
         async function submitForm() {
