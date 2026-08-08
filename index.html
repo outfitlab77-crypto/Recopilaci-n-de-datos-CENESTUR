@@ -876,6 +876,11 @@
                         content.classList.remove('hidden');
                         content.classList.add('block');
                         icon.classList.add('rotate-180');
+                        
+                        // Desplazar suavemente hasta el inicio de la sección
+                        setTimeout(() => {
+                            content.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 150);
                     } else {
                         content.classList.add('hidden');
                         content.classList.remove('block');
