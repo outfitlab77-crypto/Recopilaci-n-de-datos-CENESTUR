@@ -835,6 +835,28 @@
                 }
             }, 800);
 
+            // Manejar validación de campos ocultos (acordeones)
+            document.getElementById('baseline-form').addEventListener('invalid', function(e) {
+                e.preventDefault(); // Prevenir el tooltip nativo que falla en divs ocultos
+                showNotification('Faltan campos obligatorios por llenar (*).', 'error');
+                
+                // Expandir la sección si está oculta
+                const section = e.target.closest('.accordion-section');
+                if (section) {
+                    const contentDiv = section.querySelector('div[id^="content-sec"]');
+                    if (contentDiv && contentDiv.classList.contains('hidden')) {
+                        const secId = contentDiv.id.replace('content-', '');
+                        toggleSection(secId);
+                    }
+                }
+                
+                // Desplazar la vista hacia el error
+                setTimeout(() => {
+                    e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    e.target.focus();
+                }, 300);
+            }, true);
+
             const stored = localStorage.getItem('cenestur_fichas_v2');
             if (stored) {
                 records = JSON.parse(stored);
