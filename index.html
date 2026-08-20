@@ -70,9 +70,14 @@
             <div
                 class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-amber-900/20 relative overflow-hidden">
                 <div class="relative z-10">
-                    <h2 class="text-2xl sm:text-3xl font-black mb-4 tracking-tight">Encuesta de Diagnóstico Comercial – Mitad del Mundo</h2>
+                    <h2 class="text-2xl sm:text-3xl font-black mb-4 tracking-tight">Encuesta de Diagnóstico Comercial –
+                        Mitad del Mundo</h2>
                     <p class="text-white text-base sm:text-lg font-medium leading-relaxed text-justify max-w-4xl">
-                        Esta encuesta tiene como objetivo recopilar información y conocer las opiniones, necesidades y características de los participantes, con el propósito de obtener datos que permitan realizar un diagnóstico y análisis de la situación actual. La información proporcionada será utilizada exclusivamente con fines académicos y estadísticos, contribuyendo al desarrollo de un análisis basado en datos reales y representativos.
+                        Esta encuesta tiene como objetivo recopilar información y conocer las opiniones, necesidades y
+                        características de los participantes, con el propósito de obtener datos que permitan realizar un
+                        diagnóstico y análisis de la situación actual. La información proporcionada será utilizada
+                        exclusivamente con fines académicos y estadísticos, contribuyendo al desarrollo de un análisis
+                        basado en datos reales y representativos.
                     </p>
                 </div>
                 <i
@@ -81,6 +86,23 @@
 
             <form id="baseline-form" class="space-y-6 sm:space-y-8 pb-10"
                 onsubmit="event.preventDefault(); submitForm();">
+                <!-- ENCUESTADOR -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60 relative group">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-amber-500 rounded-l-3xl"></div>
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="bg-amber-100 p-3 rounded-xl text-amber-700"><i
+                                class="fa-solid fa-user-pen fa-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 tracking-tight">Datos del Encuestador</h3>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Encuestador <span
+                                class="text-rose-500">*</span></label>
+                        <input type="text" id="encuestador"
+                            class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium"
+                            placeholder="Ingrese su nombre completo" required>
+                    </div>
+                </div>
 
                 <!-- ID/INFO LOCAL -->
                 <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/60 relative group">
@@ -91,10 +113,6 @@
                         <h3 class="text-xl font-bold text-slate-800 tracking-tight">Información del Local</h3>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="sm:col-span-2">
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Encuestador <span class="text-rose-500">*</span></label>
-                            <input type="text" id="encuestador" class="w-full px-4 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-sm font-medium" placeholder="Ingrese su nombre completo" required>
-                        </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Negocio <span
                                     class="text-rose-500">*</span></label>
@@ -883,7 +901,7 @@
                         content.classList.remove('hidden');
                         content.classList.add('block');
                         icon.classList.add('rotate-180');
-                        
+
                         // Desplazar suavemente hasta el inicio de la sección
                         setTimeout(() => {
                             content.parentElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
