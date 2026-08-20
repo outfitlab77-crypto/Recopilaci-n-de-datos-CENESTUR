@@ -319,7 +319,7 @@
                             <!-- Q8 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">8. ¿Qué redes sociales o
-                                    canales digitales utiliza? (Puede marcar más de una opción)</label>
+                                    canales digitales utiliza? (Puede marcar más de una opción) <span class="text-rose-500">*</span></label>
                                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox"
                                             name="q8" value="Facebook" class="w-4 h-4 text-amber-600 rounded"> <span
@@ -351,7 +351,7 @@
                             <!-- Q9 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">9. ¿Desde hace cuánto tiempo
-                                    utiliza redes sociales para su negocio?</label>
+                                    utiliza redes sociales para su negocio? <span class="text-rose-500">*</span></label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q9"
                                             value="Menos de 6 meses" class="w-4 h-4 text-amber-600"> <span
@@ -370,7 +370,7 @@
                             <!-- Q10 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">10. ¿Con qué frecuencia
-                                    publica contenido?</label>
+                                    publica contenido? <span class="text-rose-500">*</span></label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q10"
                                             value="Varias veces por semana" class="w-4 h-4 text-amber-600"> <span
@@ -389,7 +389,7 @@
                             <!-- Q11 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">11. Objetivo
-                                    principal:</label>
+                                    principal: <span class="text-rose-500">*</span></label>
                                 <div class="flex flex-wrap gap-4">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q11"
                                             value="Dar a conocer el negocio" class="w-4 h-4 text-amber-600"> <span
@@ -414,7 +414,7 @@
                             <!-- Q12 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">12. Nivel de interacción con
-                                    clientes (1: Bajo, 5: Alto)</label>
+                                    clientes (1: Bajo, 5: Alto) <span class="text-rose-500">*</span></label>
                                 <div class="flex gap-4">
                                     <label class="flex flex-col items-center gap-1 cursor-pointer"><span
                                             class="text-xs font-bold text-slate-500">1</span><input type="radio"
@@ -436,7 +436,7 @@
                             <!-- Q13 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">13. ¿Ha invertido en
-                                    publicidad paga?</label>
+                                    publicidad paga? <span class="text-rose-500">*</span></label>
                                 <div class="flex flex-wrap gap-4">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q13"
                                             value="Sí, regularmente" class="w-4 h-4 text-amber-600"> <span
@@ -452,7 +452,7 @@
                             <!-- Q14 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">14. Resultados
-                                    obtenidos:</label>
+                                    obtenidos: <span class="text-rose-500">*</span></label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q14"
                                             value="Más clientes" class="w-4 h-4 text-amber-600"> <span
@@ -474,7 +474,7 @@
                             <!-- Q15 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">15. ¿Utiliza herramientas
-                                    para medir el desempeño?</label>
+                                    para medir el desempeño? <span class="text-rose-500">*</span></label>
                                 <div class="flex gap-4">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q15"
                                             value="Sí" class="w-4 h-4 text-amber-600"> <span
@@ -490,7 +490,7 @@
                             <!-- Q16 -->
                             <div>
                                 <label class="block text-sm font-bold text-slate-700 mb-3">16. ¿Tiene un calendario de
-                                    contenidos?</label>
+                                    contenidos? <span class="text-rose-500">*</span></label>
                                 <div class="flex gap-4">
                                     <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q16"
                                             value="Sí" class="w-4 h-4 text-amber-600"> <span
@@ -1011,6 +1011,51 @@
         }
 
         async function submitForm() {
+            // Validación personalizada de checkboxes y campos que dependen de otras opciones
+            const isRedesVisible = !document.getElementById('redes-section').classList.contains('hidden');
+            
+            const checksToValidate = [
+                { name: 'q17', type: 'checkbox', msg: 'Pregunta 17' },
+                { name: 'q23', type: 'checkbox', msg: 'Pregunta 23' }
+            ];
+            
+            if (isRedesVisible) {
+                checksToValidate.push(
+                    { name: 'q8', type: 'checkbox', msg: 'Pregunta 8' },
+                    { name: 'q9', type: 'radio', msg: 'Pregunta 9' },
+                    { name: 'q10', type: 'radio', msg: 'Pregunta 10' },
+                    { name: 'q11', type: 'radio', msg: 'Pregunta 11' },
+                    { name: 'q12', type: 'radio', msg: 'Pregunta 12' },
+                    { name: 'q13', type: 'radio', msg: 'Pregunta 13' },
+                    { name: 'q14', type: 'radio', msg: 'Pregunta 14' },
+                    { name: 'q15', type: 'radio', msg: 'Pregunta 15' },
+                    { name: 'q16', type: 'radio', msg: 'Pregunta 16' }
+                );
+            }
+
+            for (let check of checksToValidate) {
+                const els = document.querySelectorAll(`input[name="${check.name}"]:checked`);
+                if (els.length === 0) {
+                    showNotification(`Falta responder la ${check.msg} (*).`, 'error');
+                    
+                    const firstInput = document.querySelector(`input[name="${check.name}"]`);
+                    if (firstInput) {
+                        const section = firstInput.closest('.accordion-section');
+                        if (section) {
+                            const contentDiv = section.querySelector('div[id^="content-sec"]');
+                            if (contentDiv && contentDiv.classList.contains('hidden')) {
+                                const secId = contentDiv.id.replace('content-', '');
+                                toggleSection(secId);
+                            }
+                        }
+                        setTimeout(() => {
+                            firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    }
+                    return; // Detiene el envío
+                }
+            }
+
             const btn = document.getElementById('submit-btn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
